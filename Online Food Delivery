@@ -25,13 +25,6 @@ public class FoodOrderingApp {
         }
     }
 
-    // CashPayment class
-    static class CashPayment implements Payable {
-        public void processPayment(double amount) {
-            System.out.println("Processing cash payment of $" + amount);
-        }
-    }
-
     // Person class
     static class Person {
         public String name;
@@ -168,98 +161,94 @@ public class FoodOrderingApp {
     }
 
     // Main FoodOrderingApp class
-    static class FoodOrderingApp {
-        static Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Food Ordering App!");
 
-        public static void main(String[] args) {
-            System.out.println("Welcome to the Food Ordering App!");
+        // Get user information
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
 
-            // Get user information
-            System.out.print("Enter your name: ");
-            String name = scanner.nextLine();
+        System.out.print("Enter your delivery address: ");
+        String address = scanner.nextLine();
 
-            System.out.print("Enter your delivery address: ");
-            String address = scanner.nextLine();
+        Customer customer = new Customer(name, address);
 
-            Customer customer = new Customer(name, address);
+        while (true) {
+            // Let the user select a restaurant type
+            Restaurant restaurant = selectRestaurant(scanner);
+            System.out.println("\nYou selected: " + restaurant.name);
+            restaurant.showMenu();
 
-            while (true) {
-                // Let the user select a restaurant type
-                Restaurant restaurant = selectRestaurant();
-                System.out.println("\nYou selected: " + restaurant.name);
-                restaurant.showMenu();
+            // Let the user add items to the cart
+            selectItems(scanner, customer, restaurant);
 
-                // Let the user add items to the cart
-                selectItems(customer, restaurant);
-
-                // Ask if the user wants to go back to restaurant selection or proceed
-                System.out.println("\nWould you like to:");
-                System.out.println("1. Go back to choose another restaurant");
-                System.out.println("2. Continue to checkout");
-
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // clear the newline buffer
-
-                if (choice == 1) {
-                    continue; // restart the loop to choose another restaurant
-                } else if (choice == 2) {
-                    // Proceed to checkout
-                    checkout(customer);
-                    break; // end the loop
-                } else {
-                    System.out.println("Invalid option. Please try again.");
-                }
-            }
-        }
-
-        public static Restaurant selectRestaurant() {
-            while (true) {
-                System.out.println("\nChoose a restaurant type:");
-                System.out.println("1. Asian");
-                System.out.println("2. African");
-                System.out.println("3. Hispanic");
-                System.out.println("4. American");
-
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // consume newline
-
-                switch (choice) {
-                    case 1: return new AsianRestaurant("Wok Express");
-                    case 2: return new AfricanRestaurant("Taste of Africa");
-                    case 3: return new HispanicRestaurant("Casa Mexicana");
-                    case 4: return new AmericanRestaurant("Grill & Chill");
-                    default:
-                        System.out.println("Invalid selection. Please try again.");
-                }
-            }
-        }
-
-        public static void selectItems(Customer customer, Restaurant restaurant) {
-            System.out.println("\nEnter the item numbers to add to cart (0 to finish):");
-
-            while (true) {
-                int selection = scanner.nextInt();
-
-                if (selection == 0) break; // Stop adding items
-
-                if (selection >= 1 && selection <= restaurant.itemCount) {
-                    customer.addToCart(restaurant.menu[selection - 1]);
-                } else {
-                    System.out.println("Invalid item number.");
-                }
-            }
-        }
-
-        public static void checkout(Customer customer) {
-            System.out.println("\nChoose payment method:");
-            System.out.println("1. Credit Card");
-            System.out.println("2. Cash");
+            // Ask if the user wants to go back to restaurant selection or proceed
+            System.out.println("\nWould you like to:");
+            System.out.println("1. Go back to choose another restaurant");
+            System.out.println("2. Continue to checkout");
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // clear the newline buffer
 
-            Payable payment = (choice == 1) ? new CreditCardPayment() : new CashPayment();
-            customer.checkout(payment);
+            if (choice == 1) {
+                continue; // restart the loop to choose another restaurant
+            } else if (choice == 2) {
+                // Proceed to checkout
+                checkout(customer, scanner);
+                break; // end the loop
+            } else {
+                System.out.println("Invalid option. Please try again.");
+            }
         }
+
+        scanner.close(); // Close scanner after use
+    }
+
+    public static Restaurant selectRestaurant(Scanner scanner) {
+        while (true) {
+            System.out.println("\nChoose a restaurant type:");
+            System.out.println("1. Asian");
+            System.out.println("2. African");
+            System.out.println("3. Hispanic");
+            System.out.println("4. American");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1: return new AsianRestaurant("Wok Express");
+                case 2: return new AfricanRestaurant("Taste of Africa");
+                case 3: return new HispanicRestaurant("Casa Mexicana");
+                case 4: return new AmericanRestaurant("Grill & Chill");
+                default:
+                    System.out.println("Invalid selection. Please try again.");
+            }
+        }
+    }
+
+    public static void selectItems(Scanner scanner, Customer customer, Restaurant restaurant) {
+        System.out.println("\nEnter the item numbers to add to cart (0 to finish):");
+
+        while (true) {
+            int selection = scanner.nextInt();
+
+            if (selection == 0) break; // Stop adding items
+
+            if (selection >= 1 && selection <= restaurant.itemCount) {
+                customer.addToCart(restaurant.menu[selection - 1]);
+            } else {
+                System.out.println("Invalid item number.");
+            }
+        }
+    }
+
+    public static void checkout(Customer customer, Scanner scanner) {
+        System.out.println("\nCheckout");
+        System.out.println("Processing payment...");
+
+        // Only credit card option
+        Payable payment = new CreditCardPayment();
+        customer.checkout(payment);
     }
 }
