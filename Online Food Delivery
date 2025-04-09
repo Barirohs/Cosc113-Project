@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
+// Main class for the Food Ordering App
 public class FoodOrderingApp {
 
-    // MenuItem class
+    // MenuItem class representing each menu item
     static class MenuItem {
         public String name;
         public double price;
@@ -13,19 +14,19 @@ public class FoodOrderingApp {
         }
     }
 
-    // Payable interface
+    // Payable interface to define payment processing
     interface Payable {
         void processPayment(double amount);
     }
 
-    // CreditCardPayment class
+    // CreditCardPayment class for processing credit card payments
     static class CreditCardPayment implements Payable {
         public void processPayment(double amount) {
             System.out.println("Processing credit card payment of $" + amount);
         }
     }
 
-    // Person class
+    // Person class that holds basic information for both customers and other types of users
     static class Person {
         public String name;
         public String address;
@@ -36,7 +37,7 @@ public class FoodOrderingApp {
         }
     }
 
-    // Customer class
+    // Customer class extending Person and adds functionality for cart and checkout
     static class Customer extends Person {
         public Cart cart;
 
@@ -56,7 +57,7 @@ public class FoodOrderingApp {
         }
     }
 
-    // Cart class
+    // Cart class representing the customer's shopping cart
     static class Cart {
         public MenuItem[] items;
         public int itemCount;
@@ -82,7 +83,7 @@ public class FoodOrderingApp {
         }
     }
 
-    // Restaurant class (abstract)
+    // Abstract class Restaurant, which will be extended by specific types of restaurants
     static abstract class Restaurant {
         public String name;
         public MenuItem[] menu;
@@ -101,16 +102,19 @@ public class FoodOrderingApp {
             }
         }
 
+        // Abstract method for populating menu, which will be implemented by subclasses
         public abstract void populateMenu();
 
+        // Show the restaurant menu
         public void showMenu() {
+            System.out.println("\n--- Menu for " + name + " ---");
             for (int i = 0; i < itemCount; i++) {
                 System.out.println((i + 1) + ". " + menu[i].name + " - $" + menu[i].price);
             }
         }
     }
 
-    // Specific restaurant classes (each subclass implements `populateMenu`)
+    // Specific restaurant classes that extend Restaurant
 
     static class AsianRestaurant extends Restaurant {
         public AsianRestaurant(String name) {
@@ -160,17 +164,14 @@ public class FoodOrderingApp {
         }
     }
 
-    // Main FoodOrderingApp class
+    // Main class for starting the FoodOrderingApp
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Food Ordering App!");
 
-        // Get user information
-        System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Enter your delivery address: ");
-        String address = scanner.nextLine();
+        // Get user information with validation
+        String name = getValidInput(scanner, "Enter your name: ");
+        String address = getValidInput(scanner, "Enter your delivery address: ");
 
         Customer customer = new Customer(name, address);
 
@@ -188,23 +189,54 @@ public class FoodOrderingApp {
             System.out.println("1. Go back to choose another restaurant");
             System.out.println("2. Continue to checkout");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // clear the newline buffer
+            int choice = getValidChoice(scanner, 1, 2);
 
             if (choice == 1) {
                 continue; // restart the loop to choose another restaurant
             } else if (choice == 2) {
                 // Proceed to checkout
-                checkout(customer, scanner);
+                checkout(customer);
                 break; // end the loop
-            } else {
-                System.out.println("Invalid option. Please try again.");
             }
         }
 
         scanner.close(); // Close scanner after use
     }
 
+    // Helper method to get valid input from the user (non-empty strings)
+    public static String getValidInput(Scanner scanner, String prompt) {
+        String input;
+        while (true) {
+            System.out.print(prompt);
+            input = scanner.nextLine().trim();
+            if (!input.isEmpty()) {
+                return input;
+            } else {
+                System.out.println("Input cannot be empty, please try again.");
+            }
+        }
+    }
+
+    // Helper method to get a valid choice (within range)
+    public static int getValidChoice(Scanner scanner, int min, int max) {
+        int choice;
+        while (true) {
+            System.out.print("Please enter a choice (" + min + "-" + max + "): ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                if (choice >= min && choice <= max) {
+                    return choice;
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // consume invalid input
+            }
+        }
+    }
+
+    // Select a restaurant and return the corresponding restaurant object
     public static Restaurant selectRestaurant(Scanner scanner) {
         while (true) {
             System.out.println("\nChoose a restaurant type:");
@@ -213,8 +245,7 @@ public class FoodOrderingApp {
             System.out.println("3. Hispanic");
             System.out.println("4. American");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            int choice = getValidChoice(scanner, 1, 4);
 
             switch (choice) {
                 case 1: return new AsianRestaurant("Wok Express");
@@ -227,23 +258,21 @@ public class FoodOrderingApp {
         }
     }
 
+    // Let the customer select items from the restaurant menu
     public static void selectItems(Scanner scanner, Customer customer, Restaurant restaurant) {
         System.out.println("\nEnter the item numbers to add to cart (0 to finish):");
 
         while (true) {
-            int selection = scanner.nextInt();
+            int selection = getValidChoice(scanner, 0, restaurant.itemCount);
 
             if (selection == 0) break; // Stop adding items
 
-            if (selection >= 1 && selection <= restaurant.itemCount) {
-                customer.addToCart(restaurant.menu[selection - 1]);
-            } else {
-                System.out.println("Invalid item number.");
-            }
+            customer.addToCart(restaurant.menu[selection - 1]);
         }
     }
 
-    public static void checkout(Customer customer, Scanner scanner) {
+    // Handle checkout and process the payment
+    public static void checkout(Customer customer) {
         System.out.println("\nCheckout");
         System.out.println("Processing payment...");
 
