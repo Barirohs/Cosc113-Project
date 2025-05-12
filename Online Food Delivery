@@ -93,107 +93,280 @@ public class Main {
         void populateMenu() {
             if (country.equals("China")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Sweet and Sour Pork", 8.99), new MenuItem("Kung Pao Chicken", 7.99),
-                    new MenuItem("Spring Rolls", 3.49), new MenuItem("Hot and Sour Soup", 4.99),
-                    new MenuItem("Fried Rice", 5.99), new MenuItem("Chow Mein", 6.99),
-                    new MenuItem("Dumplings", 4.49), new MenuItem("Peking Duck", 13.99),
-                    new MenuItem("Mapo Tofu", 7.49), new MenuItem("Egg Foo Young", 6.99),
-                    new MenuItem("Beef with Broccoli", 8.49), new MenuItem("Sesame Chicken", 8.99),
-                    new MenuItem("Steamed Fish", 9.99), new MenuItem("Dim Sum", 4.99),
-                    new MenuItem("Baozi", 3.99), new MenuItem("Zha Jiang Mian", 7.99),
-                    new MenuItem("Sichuan Hotpot", 12.49), new MenuItem("Pork Buns", 3.49),
-                    new MenuItem("Eggplant Stir Fry", 7.49), new MenuItem("Chinese BBQ Ribs", 9.99)
+                    new MenuItem("Sweet and Sour Pork", 8.99),
+                    new MenuItem("Kung Pao Chicken", 7.99),
+                    new MenuItem("Spring Rolls", 3.49),
+                    new MenuItem("Hot and Sour Soup", 4.99),
+                    new MenuItem("Fried Rice", 5.99),
+                    new MenuItem("Chow Mein", 6.99),
+                    new MenuItem("Dumplings", 4.49),
+                    new MenuItem("Peking Duck", 13.99),
+                    new MenuItem("Mapo Tofu", 7.49),
+                    new MenuItem("Egg Foo Young", 6.99),
+                    new MenuItem("Beef with Broccoli", 8.49),
+                    new MenuItem("Sesame Chicken", 8.99),
+                    new MenuItem("Steamed Fish", 9.99),
+                    new MenuItem("Dim Sum", 4.99),
+                    new MenuItem("Baozi", 3.99),
+                    new MenuItem("Zha Jiang Mian", 7.99),
+                    new MenuItem("Sichuan Hotpot", 12.49),
+                    new MenuItem("Pork Buns", 3.49),
+                    new MenuItem("Eggplant Stir Fry", 7.49),
+                    new MenuItem("Chinese BBQ Ribs", 9.99)
                 ));
             } else if (country.equals("India")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Butter Chicken", 11.99), new MenuItem("Paneer Tikka", 9.99),
-                    new MenuItem("Samosa", 2.49), new MenuItem("Biryani", 10.99),
-                    new MenuItem("Naan", 1.99), new MenuItem("Masala Dosa", 6.99),
-                    new MenuItem("Chole Bhature", 7.49), new MenuItem("Lassi", 2.99),
-                    new MenuItem("Gulab Jamun", 3.49), new MenuItem("Rogan Josh", 13.99),
-                    new MenuItem("Tandoori Chicken", 11.49), new MenuItem("Saag Paneer", 9.49),
-                    new MenuItem("Aloo Gobi", 7.49), new MenuItem("Pav Bhaji", 6.49),
-                    new MenuItem("Chicken Tikka", 8.99), new MenuItem("Dhokla", 4.99),
-                    new MenuItem("Kheer", 3.99), new MenuItem("Bhindi Masala", 7.99),
-                    new MenuItem("Gajar Halwa", 5.99), new MenuItem("Pani Puri", 2.99)
+                    new MenuItem("Butter Chicken", 11.99),
+                    new MenuItem("Paneer Tikka", 9.99),
+                    new MenuItem("Samosa", 2.49),
+                    new MenuItem("Biryani", 10.99),
+                    new MenuItem("Naan", 1.99),
+                    new MenuItem("Masala Dosa", 6.99),
+                    new MenuItem("Chole Bhature", 7.49),
+                    new MenuItem("Lassi", 2.99),
+                    new MenuItem("Gulab Jamun", 3.49),
+                    new MenuItem("Rogan Josh", 13.99),
+                    new MenuItem("Tandoori Chicken", 11.49),
+                    new MenuItem("Saag Paneer", 9.49),
+                    new MenuItem("Aloo Gobi", 7.49),
+                    new MenuItem("Pav Bhaji", 6.49),
+                    new MenuItem("Chicken Tikka", 8.99),
+                    new MenuItem("Dhokla", 4.99),
+                    new MenuItem("Kheer", 3.99),
+                    new MenuItem("Bhindi Masala", 7.99),
+                    new MenuItem("Gajar Halwa", 5.99),
+                    new MenuItem("Pani Puri", 2.99)
                 ));
             } else if (country.equals("Japan")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Sushi", 12.99), new MenuItem("Ramen", 10.49),
-                    new MenuItem("Tempura", 8.99), new MenuItem("Tonkatsu", 9.99),
-                    new MenuItem("Matcha Ice Cream", 4.49), new MenuItem("Miso Soup", 2.99),
-                    new MenuItem("Okonomiyaki", 7.99), new MenuItem("Gyoza", 5.49),
-                    new MenuItem("Takoyaki", 6.99), new MenuItem("Unagi Don", 13.99),
-                    new MenuItem("Uramaki", 11.49), new MenuItem("Sashimi", 14.49),
-                    new MenuItem("Katsudon", 9.99), new MenuItem("Shabu Shabu", 15.99),
-                    new MenuItem("Onigiri", 3.49), new MenuItem("Chirashi", 12.49),
-                    new MenuItem("Kare Raisu", 8.99), new MenuItem("Yakisoba", 9.49),
-                    new MenuItem("Ginger Pork", 8.99), new MenuItem("Dango", 4.49)
+                    new MenuItem("Sushi", 12.99),
+                    new MenuItem("Ramen", 10.49),
+                    new MenuItem("Tempura", 8.99),
+                    new MenuItem("Tonkatsu", 9.99),
+                    new MenuItem("Matcha Ice Cream", 4.49),
+                    new MenuItem("Miso Soup", 2.99),
+                    new MenuItem("Okonomiyaki", 7.99),
+                    new MenuItem("Gyoza", 5.49),
+                    new MenuItem("Takoyaki", 6.99),
+                    new MenuItem("Unagi Don", 13.99),
+                    new MenuItem("Uramaki", 11.49),
+                    new MenuItem("Sashimi", 14.49),
+                    new MenuItem("Katsudon", 9.99),
+                    new MenuItem("Shabu Shabu", 15.99),
+                    new MenuItem("Onigiri", 3.49),
+                    new MenuItem("Chirashi", 12.49),
+                    new MenuItem("Kare Raisu", 8.99),
+                    new MenuItem("Yakisoba", 9.49),
+                    new MenuItem("Ginger Pork", 8.99),
+                    new MenuItem("Dango", 4.49)
                 ));
-            }
-            else if (country.equals("Bangladesh")) {
+            } else if (country.equals("Bangladesh")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Beef Curry", 10.99), new MenuItem("Paratha", 2.99), new MenuItem("Panta Ilish", 12.49),
-                    new MenuItem("Shorshe Ilish", 11.99), new MenuItem("Chicken Rezala", 9.99), new MenuItem("Dal", 4.99),
-                    new MenuItem("Bhuna Khichuri", 8.99), new MenuItem("Begun Bharta", 3.99), new MenuItem("Fish Curry", 10.49),
-                    new MenuItem("Chingri Malai Curry", 13.49), new MenuItem("Payesh", 4.99), new MenuItem("Rasgulla", 3.49),
-                    new MenuItem("Samosa", 2.99), new MenuItem("Fuchka", 2.49), new MenuItem("Borhani", 2.99),
-                    new MenuItem("Shutki Bhuna", 10.99), new MenuItem("Morog Polao", 11.99), new MenuItem("Dim Curry", 7.49),
-                    new MenuItem("Aloo Bharta", 2.49), new MenuItem("Kacchi Biryani", 13.99)
+                    new MenuItem("Beef Curry", 10.99),
+                    new MenuItem("Paratha", 2.99),
+                    new MenuItem("Panta Ilish", 12.49),
+                    new MenuItem("Shorshe Ilish", 11.99),
+                    new MenuItem("Chicken Rezala", 9.99),
+                    new MenuItem("Dal", 4.99),
+                    new MenuItem("Bhuna Khichuri", 8.99),
+                    new MenuItem("Begun Bharta", 3.99),
+                    new MenuItem("Fish Curry", 10.49),
+                    new MenuItem("Chingri Malai Curry", 13.49),
+                    new MenuItem("Payesh", 4.99),
+                    new MenuItem("Rasgulla", 3.49),
+                    new MenuItem("Samosa", 2.99),
+                    new MenuItem("Fuchka", 2.49),
+                    new MenuItem("Borhani", 2.99),
+                    new MenuItem("Shutki Bhuna", 10.99),
+                    new MenuItem("Morog Polao", 11.99),
+                    new MenuItem("Dim Curry", 7.49),
+                    new MenuItem("Aloo Bharta", 2.49),
+                    new MenuItem("Kacchi Biryani", 13.99)
                 ));
             } else if (country.equals("Pakistan")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Biryani", 9.99), new MenuItem("Chapli Kebab", 8.49), new MenuItem("Nihari", 12.99),
-                    new MenuItem("Haleem", 10.49), new MenuItem("Seekh Kebab", 8.99), new MenuItem("Karahi", 13.99),
-                    new MenuItem("Roti", 1.49), new MenuItem("Samosa", 2.49), new MenuItem("Chana Masala", 5.49),
-                    new MenuItem("Aloo Gosht", 9.99), new MenuItem("Lassi", 3.99), new MenuItem("Zarda", 4.99),
-                    new MenuItem("Pulao", 7.49), new MenuItem("Kofta", 8.99), new MenuItem("Dahi Bhalla", 6.99),
-                    new MenuItem("Mutton Korma", 12.99), new MenuItem("Chicken Sajji", 13.49), new MenuItem("Kachori", 3.99),
-                    new MenuItem("Peshawari Naan", 2.99), new MenuItem("Sindhi Biryani", 10.99)
+                    new MenuItem("Biryani", 9.99),
+                    new MenuItem("Chapli Kebab", 8.49),
+                    new MenuItem("Nihari", 12.99),
+                    new MenuItem("Haleem", 10.49),
+                    new MenuItem("Seekh Kebab", 8.99),
+                    new MenuItem("Karahi", 13.99),
+                    new MenuItem("Roti", 1.49),
+                    new MenuItem("Samosa", 2.49),
+                    new MenuItem("Chana Masala", 5.49),
+                    new MenuItem("Aloo Gosht", 9.99),
+                    new MenuItem("Lassi", 3.99),
+                    new MenuItem("Zarda", 4.99),
+                    new MenuItem("Pulao", 7.49),
+                    new MenuItem("Kofta", 8.99),
+                    new MenuItem("Dahi Bhalla", 6.99),
+                    new MenuItem("Mutton Korma", 12.99),
+                    new MenuItem("Chicken Sajji", 13.49),
+                    new MenuItem("Kachori", 3.99),
+                    new MenuItem("Peshawari Naan", 2.99),
+                    new MenuItem("Sindhi Biryani", 10.99)
                 ));
             } else if (country.equals("Ghana")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Waakye", 8.99), new MenuItem("Banku and Tilapia", 11.99), new MenuItem("Ghana Jollof", 9.99),
-                    new MenuItem("Kelewele", 3.99), new MenuItem("Fufu and Light Soup", 10.99), new MenuItem("Kenkey and Fish", 8.49),
-                    new MenuItem("Tuo Zaafi", 9.49), new MenuItem("Red Red", 7.99), new MenuItem("Chinchinga", 4.99),
-                    new MenuItem("Groundnut Soup", 8.99), new MenuItem("Ampesi and Kontomire", 7.99), new MenuItem("Gari Fortor", 6.99),
-                    new MenuItem("Boiled Yam and Palava Sauce", 8.49), new MenuItem("Abom", 6.49), new MenuItem("Kaklo and Beans", 5.99),
-                    new MenuItem("Steamed Fish", 9.49), new MenuItem("Shito", 4.99), new MenuItem("Aba and Koko", 2.99),
-                    new MenuItem("Chibom", 5.49), new MenuItem("Eggplant Stew", 6.49)
+                    new MenuItem("Waakye", 8.99),
+                    new MenuItem("Banku and Tilapia", 11.99),
+                    new MenuItem("Ghana Jollof", 9.99),
+                    new MenuItem("Kelewele", 3.99),
+                    new MenuItem("Fufu and Light Soup", 10.99),
+                    new MenuItem("Kenkey and Fish", 8.49),
+                    new MenuItem("Tuo Zaafi", 9.49),
+                    new MenuItem("Red Red", 7.99),
+                    new MenuItem("Chinchinga", 4.99),
+                    new MenuItem("Groundnut Soup", 8.99),
+                    new MenuItem("Ampesi and Kontomire", 7.99),
+                    new MenuItem("Gari Fortor", 6.99),
+                    new MenuItem("Boiled Yam and Palava Sauce", 8.49),
+                    new MenuItem("Abom", 6.49),
+                    new MenuItem("Kaklo and Beans", 5.99),
+                    new MenuItem("Steamed Fish", 9.49),
+                    new MenuItem("Shito", 4.99),
+                    new MenuItem("Aba and Koko", 2.99),
+                    new MenuItem("Chibom", 5.49),
+                    new MenuItem("Eggplant Stew", 6.49)
                 ));
             } else if (country.equals("Kenya")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Nyama Choma", 11.99), new MenuItem("Ugali", 4.99), new MenuItem("Sukuma Wiki", 3.99),
-                    new MenuItem("Chapati", 2.99), new MenuItem("Mandazi", 1.99), new MenuItem("Githeri", 6.49),
-                    new MenuItem("Matoke", 5.49), new MenuItem("Pilau", 7.49), new MenuItem("Kachumbari", 2.49),
-                    new MenuItem("Beef Stew", 8.99), new MenuItem("Chicken Fry", 9.49), new MenuItem("Tilapia Fry", 10.49),
-                    new MenuItem("Mukimo", 6.99), new MenuItem("Samosa", 3.49), new MenuItem("Maandazi with Tea", 3.99),
-                    new MenuItem("Steamed Corn", 2.49), new MenuItem("Omena", 5.49), new MenuItem("Mshikaki", 4.99),
-                    new MenuItem("Nakuru Fish", 7.99), new MenuItem("Kuku Choma", 8.49)
+                    new MenuItem("Nyama Choma", 11.99),
+                    new MenuItem("Ugali", 4.99),
+                    new MenuItem("Sukuma Wiki", 3.99),
+                    new MenuItem("Chapati", 2.99),
+                    new MenuItem("Mandazi", 1.99),
+                    new MenuItem("Githeri", 6.49),
+                    new MenuItem("Matoke", 5.49),
+                    new MenuItem("Pilau", 7.49),
+                    new MenuItem("Kachumbari", 2.49),
+                    new MenuItem("Beef Stew", 8.99),
+                    new MenuItem("Chicken Fry", 9.49),
+                    new MenuItem("Tilapia Fry", 10.49),
+                    new MenuItem("Mukimo", 6.99),
+                    new MenuItem("Samosa", 3.49),
+                    new MenuItem("Maandazi with Tea", 3.99),
+                    new MenuItem("Steamed Corn", 2.49),
+                    new MenuItem("Omena", 5.49),
+                    new MenuItem("Mshikaki", 4.99),
+                    new MenuItem("Nakuru Fish", 7.99),
+                    new MenuItem("Kuku Choma", 8.49)
                 ));
             } else if (country.equals("Senegal")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Thieboudienne", 12.99), new MenuItem("Yassa Chicken", 10.49), new MenuItem("Mafe", 9.99),
-                    new MenuItem("Chebu Jën", 11.99), new MenuItem("Bissap", 2.99), new MenuItem("Ndolè", 8.49),
-                    new MenuItem("Saka Saka", 7.99), new MenuItem("Akara", 4.49), new MenuItem("Briouats", 5.99),
-                    new MenuItem("Fried Fish", 9.99), new MenuItem("Couscous", 6.99), new MenuItem("Aubergine Stew", 7.49),
-                    new MenuItem("Chili Chicken", 8.99), new MenuItem("N’diaye", 9.49), new MenuItem("Vegetable Soup", 5.49),
-                    new MenuItem("Senegalese Rice", 7.49), new MenuItem("Pounded Yam with Peanut Sauce", 6.99),
-                    new MenuItem("Senegalese Chicken Soup", 6.49), new MenuItem("Dibi", 10.49), new MenuItem("Mbeur", 8.49)
+                    new MenuItem("Thieboudienne", 12.99),
+                    new MenuItem("Yassa Chicken", 10.49),
+                    new MenuItem("Mafe", 9.99),
+                    new MenuItem("Chebu Jën", 11.99),
+                    new MenuItem("Bissap", 2.99),
+                    new MenuItem("Ndolè", 8.49),
+                    new MenuItem("Saka Saka", 7.99),
+                    new MenuItem("Akara", 4.49),
+                    new MenuItem("Briouats", 5.99),
+                    new MenuItem("Fried Fish", 9.99),
+                    new MenuItem("Couscous", 6.99),
+                    new MenuItem("Aubergine Stew", 7.49),
+                    new MenuItem("Chili Chicken", 8.99),
+                    new MenuItem("N’diaye", 9.49),
+                    new MenuItem("Vegetable Soup", 5.49),
+                    new MenuItem("Senegalese Rice", 7.49),
+                    new MenuItem("Pounded Yam with Peanut Sauce", 6.99),
+                    new MenuItem("Senegalese Chicken Soup", 6.49),
+                    new MenuItem("Dibi", 10.49),
+                    new MenuItem("Mbeur", 8.49)
                 ));
             } else if (country.equals("USA")) {
                 menu.addAll(Arrays.asList(
-                    new MenuItem("Burger", 10.99), new MenuItem("Fries", 3.49), new MenuItem("Hot Dog", 5.99),
-                    new MenuItem("BBQ Ribs", 14.99), new MenuItem("Mac and Cheese", 7.99), new MenuItem("Fried Chicken", 9.99),
-                    new MenuItem("Cornbread", 4.49), new MenuItem("Apple Pie", 5.49), new MenuItem("Meatloaf", 10.49),
-                    new MenuItem("Mashed Potatoes", 3.99), new MenuItem("Grilled Cheese", 4.99), new MenuItem("Coleslaw", 2.49),
-                    new MenuItem("Biscuits and Gravy", 6.99), new MenuItem("Clam Chowder", 7.99), new MenuItem("Chicken Pot Pie", 8.99),
-                    new MenuItem("Sloppy Joe", 6.49), new MenuItem("Corn Dog", 4.99), new MenuItem("Buffalo Wings", 9.99),
-                    new MenuItem("Tater Tots", 3.49), new MenuItem("Cheesecake", 5.99)
+                    new MenuItem("Burger", 10.99),
+                    new MenuItem("Fries", 3.49),
+                    new MenuItem("Hot Dog", 5.99),
+                    new MenuItem("BBQ Ribs", 14.99),
+                    new MenuItem("Mac and Cheese", 7.99),
+                    new MenuItem("Fried Chicken", 9.99),
+                    new MenuItem("Cornbread", 4.49),
+                    new MenuItem("Apple Pie", 5.49),
+                    new MenuItem("Meatloaf", 10.49),
+                    new MenuItem("Mashed Potatoes", 3.99),
+                    new MenuItem("Grilled Cheese", 4.99),
+                    new MenuItem("Coleslaw", 2.49),
+                    new MenuItem("Biscuits and Gravy", 6.99),
+                    new MenuItem("Clam Chowder", 7.99),
+                    new MenuItem("Chicken Pot Pie", 8.99),
+                    new MenuItem("Sloppy Joe", 6.49),
+                    new MenuItem("Corn Dog", 4.99),
+                    new MenuItem("Buffalo Wings", 9.99),
+                    new MenuItem("Tater Tots", 3.49),
+                    new MenuItem("Cheesecake", 5.99)
+                ));
+            } else if (country.equals("Nigeria")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Jollof Rice", 8.99),
+                    new MenuItem("Egusi Soup", 7.49),
+                    new MenuItem("Pounded Yam", 6.99),
+                    new MenuItem("Suya", 5.99),
+                    new MenuItem("Akara", 3.49),
+                    new MenuItem("Moin Moin", 4.49),
+                    new MenuItem("Pepper Soup", 6.99),
+                    new MenuItem("Efo Riro", 7.99),
+                    new MenuItem("Fried Plantain", 2.99),
+                    new MenuItem("Beef Stew", 8.49)
+                ));
+            } else if (country.equals("Mexico")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Tacos al Pastor", 9.99),
+                    new MenuItem("Enchiladas", 8.99),
+                    new MenuItem("Quesadillas", 7.49),
+                    new MenuItem("Tamales", 6.99),
+                    new MenuItem("Chiles Rellenos", 10.49),
+                    new MenuItem("Guacamole", 4.99),
+                    new MenuItem("Pozole", 9.49),
+                    new MenuItem("Mole Poblano", 11.99),
+                    new MenuItem("Sopes", 5.99),
+                    new MenuItem("Churros", 3.99)
+                ));
+            } else if (country.equals("Cuba")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Ropa Vieja", 10.49),
+                    new MenuItem("Arroz con Pollo", 9.99),
+                    new MenuItem("Tostones", 3.99),
+                    new MenuItem("Moros y Cristianos", 4.99),
+                    new MenuItem("Cuban Sandwich", 8.49),
+                    new MenuItem("Picadillo", 7.99),
+                    new MenuItem("Vaca Frita", 10.99),
+                    new MenuItem("Lechón Asado", 12.49),
+                    new MenuItem("Yuca con Mojo", 5.99),
+                    new MenuItem("Flan Cubano", 4.49)
+                ));
+            } else if (country.equals("Dominican Republic")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("La Bandera", 9.99),
+                    new MenuItem("Mangu", 6.49),
+                    new MenuItem("Sancocho", 10.99),
+                    new MenuItem("Pastelón", 8.99),
+                    new MenuItem("Chicharrón", 7.49),
+                    new MenuItem("Pollo Guisado", 9.49),
+                    new MenuItem("Habichuelas con Dulce", 5.99),
+                    new MenuItem("Chimi (Burger)", 4.99),
+                    new MenuItem("Tres Leches Cake", 3.99),
+                    new MenuItem("Ensalada Verde", 4.49)
+                ));
+            } else if (country.equals("Colombia")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Arepas", 3.99),
+                    new MenuItem("Bandeja Paisa", 12.99),
+                    new MenuItem("Empanadas", 2.99),
+                    new MenuItem("Ajiaco", 9.99),
+                    new MenuItem("Changua", 4.99),
+                    new MenuItem("Sancocho", 10.49),
+                    new MenuItem("Tamal Tolimense", 8.99),
+                    new MenuItem("Buñuelos", 3.49),
+                    new MenuItem("Lechona", 11.99),
+                    new MenuItem("Arroz con Coco", 5.99)
                 ));
             }
         }
 
+        
         void showMenu() {
             System.out.println("\nMenu for " + country + " (" + region + "):");
             for (int i = 0; i < menu.size(); i++) {
@@ -278,4 +451,3 @@ public class Main {
         }
     }
 }
-
