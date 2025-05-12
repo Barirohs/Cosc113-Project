@@ -26,8 +26,8 @@ public class Main {
 
         double calculateTotal() {
             double total = 0;
-            for (MenuItem item : items) {
-                total += item.price;
+            for (int i = 0; i < items.size(); i++) {
+                total += items.get(i).price;
             }
             return total;
         }
@@ -35,7 +35,8 @@ public class Main {
         void printReceipt(String customerName) {
             System.out.println("Receipt for " + customerName);
             System.out.println("---------------------------");
-            for (MenuItem item : items) {
+            for (int i = 0; i < items.size(); i++) {
+                MenuItem item = items.get(i);
                 System.out.println(item.name + " - $" + item.price);
             }
             System.out.println("---------------------------");
@@ -44,6 +45,11 @@ public class Main {
         }
     }
 
+    static class CreditCardPayment implements Payable {
+        public void processPayment(double amount) {
+            System.out.println("Processing credit card payment of $" + amount);
+        }
+    }
     static class Person {
         String name;
         String address;
@@ -54,8 +60,30 @@ public class Main {
         }
     }
 
+    static class Purchase {
+        List<MenuItem> purchasedItems;
+        double total;
+
+        Purchase(List<MenuItem> purchasedItems, double total) {
+            this.purchasedItems = new ArrayList<>();
+            for (int i = 0; i < purchasedItems.size(); i++) {
+                this.purchasedItems.add(purchasedItems.get(i));
+            }
+            this.total = total;
+        }
+
+        void printPurchase() {
+            for (int i = 0; i < purchasedItems.size(); i++) {
+                MenuItem item = purchasedItems.get(i);
+                System.out.println(" - " + item.name + ": $" + item.price);
+            }
+            System.out.println("Total: $" + total);
+        }
+    }
+
     static class Customer extends Person {
         Cart cart = new Cart();
+        List<Purchase> purchaseHistory = new ArrayList<>();
 
         Customer(String name, String address) {
             super(name, address);
@@ -70,15 +98,23 @@ public class Main {
             paymentMethod.processPayment(total);
             System.out.println("Order placed by " + name + ", delivery to: " + address);
             cart.printReceipt(name);
+            purchaseHistory.add(new Purchase(cart.items, total));
+            cart = new Cart(); // reset cart
+        }
+
+        void showPurchaseHistory() {
+            System.out.println("\nPurchase History for " + name + ":");
+            if (purchaseHistory.isEmpty()) {
+                System.out.println("  No previous purchases.");
+            } else {
+                for (int i = 0; i < purchaseHistory.size(); i++) {
+                    System.out.println("Order #" + (i + 1) + ":");
+                    purchaseHistory.get(i).printPurchase();
+                    System.out.println();
+                }
+            }
         }
     }
-
-    static class CreditCardPayment implements Payable {
-        public void processPayment(double amount) {
-            System.out.println("Processing credit card payment of $" + amount);
-        }
-    }
-
     static class Review {
         String customerName;
         int rating;
@@ -90,6 +126,7 @@ public class Main {
             this.comment = comment;
         }
     }
+
     static class Restaurant {
         String region;
         String country;
@@ -107,41 +144,93 @@ public class Main {
                 menu.addAll(Arrays.asList(
                     new MenuItem("Sweet and Sour Pork", 8.99),
                     new MenuItem("Kung Pao Chicken", 7.99),
-                    new MenuItem("Fried Rice", 5.99),
                     new MenuItem("Spring Rolls", 3.49),
-                    new MenuItem("Dumplings", 4.49)
+                    new MenuItem("Hot and Sour Soup", 4.99),
+                    new MenuItem("Fried Rice", 5.99),
+                    new MenuItem("Chow Mein", 6.99),
+                    new MenuItem("Dumplings", 4.49),
+                    new MenuItem("Peking Duck", 13.99),
+                    new MenuItem("Mapo Tofu", 7.49),
+                    new MenuItem("Egg Foo Young", 6.99),
+                    new MenuItem("Beef with Broccoli", 8.49),
+                    new MenuItem("Sesame Chicken", 8.99),
+                    new MenuItem("Steamed Fish", 9.99),
+                    new MenuItem("Dim Sum", 4.99),
+                    new MenuItem("Baozi", 3.99),
+                    new MenuItem("Zha Jiang Mian", 7.99),
+                    new MenuItem("Sichuan Hotpot", 12.49),
+                    new MenuItem("Pork Buns", 3.49),
+                    new MenuItem("Eggplant Stir Fry", 7.49),
+                    new MenuItem("Chinese BBQ Ribs", 9.99)
                 ));
             } else if (country.equals("India")) {
                 menu.addAll(Arrays.asList(
                     new MenuItem("Butter Chicken", 11.99),
-                    new MenuItem("Samosa", 2.49),
                     new MenuItem("Paneer Tikka", 9.99),
+                    new MenuItem("Samosa", 2.49),
+                    new MenuItem("Biryani", 10.99),
                     new MenuItem("Naan", 1.99),
-                    new MenuItem("Biryani", 10.99)
+                    new MenuItem("Masala Dosa", 6.99),
+                    new MenuItem("Chole Bhature", 7.49),
+                    new MenuItem("Lassi", 2.99),
+                    new MenuItem("Gulab Jamun", 3.49),
+                    new MenuItem("Rogan Josh", 13.99),
+                    new MenuItem("Tandoori Chicken", 11.49),
+                    new MenuItem("Saag Paneer", 9.49),
+                    new MenuItem("Aloo Gobi", 7.49),
+                    new MenuItem("Pav Bhaji", 6.49),
+                    new MenuItem("Chicken Tikka", 8.99),
+                    new MenuItem("Dhokla", 4.99),
+                    new MenuItem("Kheer", 3.99),
+                    new MenuItem("Bhindi Masala", 7.99),
+                    new MenuItem("Gajar Halwa", 5.99),
+                    new MenuItem("Pani Puri", 2.99)
                 ));
             } else if (country.equals("Japan")) {
                 menu.addAll(Arrays.asList(
                     new MenuItem("Sushi", 12.99),
                     new MenuItem("Ramen", 10.49),
                     new MenuItem("Tempura", 8.99),
+                    new MenuItem("Tonkatsu", 9.99),
+                    new MenuItem("Matcha Ice Cream", 4.49),
+                    new MenuItem("Miso Soup", 2.99),
+                    new MenuItem("Okonomiyaki", 7.99),
                     new MenuItem("Gyoza", 5.49),
-                    new MenuItem("Miso Soup", 2.99)
+                    new MenuItem("Takoyaki", 6.99),
+                    new MenuItem("Unagi Don", 13.99),
+                    new MenuItem("Uramaki", 11.49),
+                    new MenuItem("Sashimi", 14.49),
+                    new MenuItem("Katsudon", 9.99),
+                    new MenuItem("Shabu Shabu", 15.99),
+                    new MenuItem("Onigiri", 3.49),
+                    new MenuItem("Chirashi", 12.49),
+                    new MenuItem("Kare Raisu", 8.99),
+                    new MenuItem("Yakisoba", 9.49),
+                    new MenuItem("Ginger Pork", 8.99),
+                    new MenuItem("Dango", 4.49)
                 ));
             } else if (country.equals("Bangladesh")) {
                 menu.addAll(Arrays.asList(
                     new MenuItem("Beef Curry", 10.99),
                     new MenuItem("Paratha", 2.99),
+                    new MenuItem("Panta Ilish", 12.49),
+                    new MenuItem("Shorshe Ilish", 11.99),
+                    new MenuItem("Chicken Rezala", 9.99),
                     new MenuItem("Dal", 4.99),
+                    new MenuItem("Bhuna Khichuri", 8.99),
+                    new MenuItem("Begun Bharta", 3.99),
                     new MenuItem("Fish Curry", 10.49),
-                    new MenuItem("Payesh", 4.99)
-                ));
-            } else if (country.equals("Pakistan")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Nihari", 12.99),
-                    new MenuItem("Seekh Kebab", 8.99),
-                    new MenuItem("Biryani", 9.99),
-                    new MenuItem("Roti", 1.49),
-                    new MenuItem("Haleem", 10.49)
+                    new MenuItem("Chingri Malai Curry", 13.49),
+                    new MenuItem("Payesh", 4.99),
+                    new MenuItem("Rasgulla", 3.49),
+                    new MenuItem("Samosa", 2.99),
+                    new MenuItem("Fuchka", 2.49),
+                    new MenuItem("Borhani", 2.99),
+                    new MenuItem("Shutki Bhuna", 10.99),
+                    new MenuItem("Morog Polao", 11.99),
+                    new MenuItem("Dim Curry", 7.49),
+                    new MenuItem("Aloo Bharta", 2.49),
+                    new MenuItem("Kacchi Biryani", 13.99)
                 ));
             } else if (country.equals("Nigeria")) {
                 menu.addAll(Arrays.asList(
@@ -149,63 +238,22 @@ public class Main {
                     new MenuItem("Egusi Soup", 7.49),
                     new MenuItem("Pounded Yam", 6.99),
                     new MenuItem("Suya", 5.99),
-                    new MenuItem("Pepper Soup", 6.99)
-                ));
-            } else if (country.equals("Ghana")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Waakye", 8.99),
-                    new MenuItem("Fufu and Light Soup", 10.99),
-                    new MenuItem("Kelewele", 3.99),
-                    new MenuItem("Banku and Tilapia", 11.99),
-                    new MenuItem("Red Red", 7.99)
-                ));
-            } else if (country.equals("Kenya")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Nyama Choma", 11.99),
-                    new MenuItem("Ugali", 4.99),
-                    new MenuItem("Sukuma Wiki", 3.99),
-                    new MenuItem("Pilau", 7.49),
-                    new MenuItem("Chapati", 2.99)
-                ));
-            } else if (country.equals("Senegal")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Thieboudienne", 12.99),
-                    new MenuItem("Yassa Chicken", 10.49),
-                    new MenuItem("Mafe", 9.99),
-                    new MenuItem("Dibi", 10.49),
-                    new MenuItem("Bissap", 2.99)
-                ));
-            } else if (country.equals("Mexico")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Tacos al Pastor", 9.99),
-                    new MenuItem("Enchiladas", 8.99),
-                    new MenuItem("Quesadillas", 7.49),
-                    new MenuItem("Churros", 3.99),
-                    new MenuItem("Guacamole", 4.99)
-                ));
-            } else if (country.equals("Cuba")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Ropa Vieja", 10.49),
-                    new MenuItem("Arroz con Pollo", 9.99),
-                    new MenuItem("Tostones", 3.99),
-                    new MenuItem("Picadillo", 7.99),
-                    new MenuItem("Flan Cubano", 4.49)
-                ));
-            } else if (country.equals("Dominican Republic")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("La Bandera", 9.99),
-                    new MenuItem("Mangu", 6.49),
-                    new MenuItem("Sancocho", 10.99),
-                    new MenuItem("Chicharrón", 7.49),
-                    new MenuItem("Tres Leches Cake", 3.99)
-                ));
-            } else if (country.equals("Colombia")) {
-                menu.addAll(Arrays.asList(
-                    new MenuItem("Arepas", 3.99),
-                    new MenuItem("Bandeja Paisa", 12.99),
-                    new MenuItem("Empanadas", 2.99),
-                    new MenuItem("Ajiaco", 9.99),
-                    new MenuItem("Lechona", 11.99)
+                    new MenuItem("Akara", 3.49),
+                    new MenuItem("Moin Moin", 4.49),
+                    new MenuItem("Pepper Soup", 6.99),
+                    new MenuItem("Efo Riro", 7.99),
+                    new MenuItem("Fried Plantain", 2.99),
+                    new MenuItem("Beef Stew", 8.49),
+                    new MenuItem("Ogbono Soup", 7.99),
+                    new MenuItem("Amala", 6.49),
+                    new MenuItem("Ofada Rice", 7.99),
+                    new MenuItem("Iyan", 6.99),
+                    new MenuItem("Banga Soup", 8.99),
+                    new MenuItem("Nkwobi", 9.99),
+                    new MenuItem("Ewedu Soup", 6.49),
+                    new MenuItem("Catfish Pepper Soup", 10.49),
+                    new MenuItem("Asun", 7.99),
+                    new MenuItem("Gizdodo", 5.99)
                 ));
             } else if (country.equals("USA")) {
                 menu.addAll(Arrays.asList(
@@ -213,118 +261,297 @@ public class Main {
                     new MenuItem("Fries", 3.49),
                     new MenuItem("Hot Dog", 5.99),
                     new MenuItem("BBQ Ribs", 14.99),
-                    new MenuItem("Apple Pie", 5.49)
+                    new MenuItem("Mac and Cheese", 7.99),
+                    new MenuItem("Fried Chicken", 9.99),
+                    new MenuItem("Cornbread", 4.49),
+                    new MenuItem("Apple Pie", 5.49),
+                    new MenuItem("Meatloaf", 10.49),
+                    new MenuItem("Mashed Potatoes", 3.99),
+                    new MenuItem("Grilled Cheese", 4.99),
+                    new MenuItem("Coleslaw", 2.49),
+                    new MenuItem("Biscuits and Gravy", 6.99),
+                    new MenuItem("Clam Chowder", 7.99),
+                    new MenuItem("Chicken Pot Pie", 8.99),
+                    new MenuItem("Sloppy Joe", 6.49),
+                    new MenuItem("Corn Dog", 4.99),
+                    new MenuItem("Buffalo Wings", 9.99),
+                    new MenuItem("Tater Tots", 3.49),
+                    new MenuItem("Cheesecake", 5.99)
                 ));
             }
-        }
-
-        void showMenu() {
-            System.out.println("\nMenu for " + country + " (" + region + "):");
-            for (int i = 0; i < menu.size(); i++) {
-                System.out.printf("%2d. %-25s $%.2f%n", i + 1, menu.get(i).name, menu.get(i).price);
+            else if (country.equals("Ghana")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Waakye", 8.99),
+                    new MenuItem("Banku and Tilapia", 11.99),
+                    new MenuItem("Ghana Jollof", 9.99),
+                    new MenuItem("Kelewele", 3.99),
+                    new MenuItem("Fufu and Light Soup", 10.99),
+                    new MenuItem("Kenkey and Fish", 8.49),
+                    new MenuItem("Tuo Zaafi", 9.49),
+                    new MenuItem("Red Red", 7.99),
+                    new MenuItem("Chinchinga", 4.99),
+                    new MenuItem("Groundnut Soup", 8.99),
+                    new MenuItem("Ampesi and Kontomire", 7.99),
+                    new MenuItem("Gari Fortor", 6.99),
+                    new MenuItem("Boiled Yam and Palava Sauce", 8.49),
+                    new MenuItem("Abom", 6.49),
+                    new MenuItem("Kaklo and Beans", 5.99),
+                    new MenuItem("Steamed Fish", 9.49),
+                    new MenuItem("Shito", 4.99),
+                    new MenuItem("Aba and Koko", 2.99),
+                    new MenuItem("Chibom", 5.49),
+                    new MenuItem("Eggplant Stew", 6.49)
+                ));
+            } else if (country.equals("Kenya")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Nyama Choma", 11.99),
+                    new MenuItem("Ugali", 4.99),
+                    new MenuItem("Sukuma Wiki", 3.99),
+                    new MenuItem("Chapati", 2.99),
+                    new MenuItem("Mandazi", 1.99),
+                    new MenuItem("Githeri", 6.49),
+                    new MenuItem("Matoke", 5.49),
+                    new MenuItem("Pilau", 7.49),
+                    new MenuItem("Kachumbari", 2.49),
+                    new MenuItem("Beef Stew", 8.99),
+                    new MenuItem("Chicken Fry", 9.49),
+                    new MenuItem("Tilapia Fry", 10.49),
+                    new MenuItem("Mukimo", 6.99),
+                    new MenuItem("Samosa", 3.49),
+                    new MenuItem("Maandazi with Tea", 3.99),
+                    new MenuItem("Steamed Corn", 2.49),
+                    new MenuItem("Omena", 5.49),
+                    new MenuItem("Mshikaki", 4.99),
+                    new MenuItem("Nakuru Fish", 7.99),
+                    new MenuItem("Kuku Choma", 8.49)
+                ));
+            } else if (country.equals("Senegal")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Thieboudienne", 12.99),
+                    new MenuItem("Yassa Chicken", 10.49),
+                    new MenuItem("Mafe", 9.99),
+                    new MenuItem("Chebu Jën", 11.99),
+                    new MenuItem("Bissap", 2.99),
+                    new MenuItem("Ndolè", 8.49),
+                    new MenuItem("Saka Saka", 7.99),
+                    new MenuItem("Akara", 4.49),
+                    new MenuItem("Briouats", 5.99),
+                    new MenuItem("Fried Fish", 9.99),
+                    new MenuItem("Couscous", 6.99),
+                    new MenuItem("Aubergine Stew", 7.49),
+                    new MenuItem("Chili Chicken", 8.99),
+                    new MenuItem("N’diaye", 9.49),
+                    new MenuItem("Vegetable Soup", 5.49),
+                    new MenuItem("Senegalese Rice", 7.49),
+                    new MenuItem("Pounded Yam with Peanut Sauce", 6.99),
+                    new MenuItem("Senegalese Chicken Soup", 6.49),
+                    new MenuItem("Dibi", 10.49),
+                    new MenuItem("Mbeur", 8.49)
+                ));
+            } else if (country.equals("Mexico")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Tacos al Pastor", 9.99),
+                    new MenuItem("Enchiladas", 8.99),
+                    new MenuItem("Quesadillas", 7.49),
+                    new MenuItem("Tamales", 6.99),
+                    new MenuItem("Chiles Rellenos", 10.49),
+                    new MenuItem("Guacamole", 4.99),
+                    new MenuItem("Pozole", 9.49),
+                    new MenuItem("Mole Poblano", 11.99),
+                    new MenuItem("Sopes", 5.99),
+                    new MenuItem("Churros", 3.99),
+                    new MenuItem("Tostadas", 6.49),
+                    new MenuItem("Elote", 3.49),
+                    new MenuItem("Carnitas", 10.49),
+                    new MenuItem("Menudo", 9.99),
+                    new MenuItem("Ceviche", 8.99),
+                    new MenuItem("Birria", 11.49),
+                    new MenuItem("Huevos Rancheros", 7.99),
+                    new MenuItem("Tamal de Dulce", 4.99),
+                    new MenuItem("Aguachile", 10.99),
+                    new MenuItem("Pambazo", 6.99)
+                ));
+            } else if (country.equals("Cuba")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Ropa Vieja", 10.49),
+                    new MenuItem("Arroz con Pollo", 9.99),
+                    new MenuItem("Tostones", 3.99),
+                    new MenuItem("Moros y Cristianos", 4.99),
+                    new MenuItem("Cuban Sandwich", 8.49),
+                    new MenuItem("Picadillo", 7.99),
+                    new MenuItem("Vaca Frita", 10.99),
+                    new MenuItem("Lechón Asado", 12.49),
+                    new MenuItem("Yuca con Mojo", 5.99),
+                    new MenuItem("Flan Cubano", 4.49),
+                    new MenuItem("Chicharritas", 3.49),
+                    new MenuItem("Camarones Enchilados", 11.49),
+                    new MenuItem("Tamales", 6.99),
+                    new MenuItem("Cuban Black Bean Soup", 4.99),
+                    new MenuItem("Pastelitos", 3.99),
+                    new MenuItem("Pan con Bistec", 9.49),
+                    new MenuItem("Croquetas", 2.99),
+                    new MenuItem("Malanga Frita", 4.49),
+                    new MenuItem("Arroz Imperial", 10.99),
+                    new MenuItem("Cuban Coffee", 1.99)
+                ));
+            } else if (country.equals("Dominican Republic")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("La Bandera", 9.99),
+                    new MenuItem("Mangu", 6.49),
+                    new MenuItem("Sancocho", 10.99),
+                    new MenuItem("Pastelón", 8.99),
+                    new MenuItem("Chicharrón", 7.49),
+                    new MenuItem("Pollo Guisado", 9.49),
+                    new MenuItem("Habichuelas con Dulce", 5.99),
+                    new MenuItem("Chimi", 4.99),
+                    new MenuItem("Tres Leches Cake", 3.99),
+                    new MenuItem("Ensalada Verde", 4.49),
+                    new MenuItem("Yaroa", 7.99),
+                    new MenuItem("Tostones", 3.99),
+                    new MenuItem("Locrio de Pollo", 8.49),
+                    new MenuItem("Asopao", 9.99),
+                    new MenuItem("Casabe", 2.99),
+                    new MenuItem("Mondongo", 8.99),
+                    new MenuItem("Dulce de Leche", 4.49),
+                    new MenuItem("Pollo al Horno", 9.99),
+                    new MenuItem("Longaniza Frita", 5.99),
+                    new MenuItem("Batata Frita", 3.49)
+                ));
+            } else if (country.equals("Colombia")) {
+                menu.addAll(Arrays.asList(
+                    new MenuItem("Arepas", 3.99),
+                    new MenuItem("Bandeja Paisa", 12.99),
+                    new MenuItem("Empanadas", 2.99),
+                    new MenuItem("Ajiaco", 9.99),
+                    new MenuItem("Changua", 4.99),
+                    new MenuItem("Sancocho", 10.49),
+                    new MenuItem("Tamal Tolimense", 8.99),
+                    new MenuItem("Buñuelos", 3.49),
+                    new MenuItem("Lechona", 11.99),
+                    new MenuItem("Arroz con Coco", 5.99),
+                    new MenuItem("Patacones", 4.49),
+                    new MenuItem("Chuleta Valluna", 9.99),
+                    new MenuItem("Posta Negra", 10.49),
+                    new MenuItem("Chicharrón", 5.99),
+                    new MenuItem("Arequipe", 2.99),
+                    new MenuItem("Pandebono", 3.49),
+                    new MenuItem("Obleas", 2.49),
+                    new MenuItem("Lulada", 2.99),
+                    new MenuItem("Cazuela de Mariscos", 12.99),
+                    new MenuItem("Morcilla", 4.99)
+                ));
+                     }
+                    }
+            void showMenu() {
+                System.out.println("\nMenu for " + country + " (" + region + "):");
+                for (int i = 0; i < menu.size(); i++) {
+                    System.out.printf("%2d. %-25s $%.2f%n", i + 1, menu.get(i).name, menu.get(i).price);
+                }
             }
-        }
-
-        void addReview(Review review) {
-            reviews.add(review);
-        }
-
-        void showReviews() {
-            System.out.println("\nReviews for " + country + ":");
-            if (reviews.isEmpty()) {
-                System.out.println("  No reviews yet.");
-            } else {
-                for (Review r : reviews) {
-                    System.out.println(r.customerName + " (" + r.rating + "/5): " + r.comment);
+    
+            void addReview(Review review) {
+                reviews.add(review);
+            }
+    
+            void showReviews() {
+                System.out.println("\nReviews for " + country + ":");
+                if (reviews.isEmpty()) {
+                    System.out.println("  No reviews yet.");
+                } else {
+                    for (Review r : reviews) {
+                        System.out.println(r.customerName + " (" + r.rating + "/5): " + r.comment);
+                    }
                 }
             }
         }
-    }
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the Food Ordering App!");
-
-        String name = getValidInput(scanner, "Enter your name: ");
-        String address = getValidInput(scanner, "Enter your delivery address: ");
-        Customer customer = new Customer(name, address);
-
-        String[] regions = {"Asian", "African", "Hispanic", "American"};
-        Map<String, List<String>> countriesByRegion = new HashMap<>();
-        countriesByRegion.put("Asian", Arrays.asList("China", "India", "Japan", "Bangladesh", "Pakistan"));
-        countriesByRegion.put("African", Arrays.asList("Nigeria", "Ghana", "Kenya", "Senegal"));
-        countriesByRegion.put("Hispanic", Arrays.asList("Mexico", "Cuba", "Dominican Republic", "Colombia"));
-        countriesByRegion.put("American", Arrays.asList("USA"));
-
-        while (true) {
-            System.out.println("\nSelect a region:");
-            for (int i = 0; i < regions.length; i++) {
-                System.out.printf("  %d. %s%n", i + 1, regions[i]);
-            }
-            int regionChoice = getValidChoice(scanner, 1, regions.length);
-            String region = regions[regionChoice - 1];
-
-            List<String> countries = countriesByRegion.get(region);
-            System.out.println("\nSelect a country in " + region + ":");
-            for (int i = 0; i < countries.size(); i++) {
-                System.out.printf("  %d. %s%n", i + 1, countries.get(i));
-            }
-            int countryChoice = getValidChoice(scanner, 1, countries.size());
-            String country = countries.get(countryChoice - 1);
-
-            Restaurant restaurant = new Restaurant(region, country);
-            restaurant.showMenu();
-
+    
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Welcome to the Food Ordering App!");
+    
+            String name = getValidInput(scanner, "Enter your name: ");
+            String address = getValidInput(scanner, "Enter your delivery address: ");
+            Customer customer = new Customer(name, address);
+    
+            String[] regions = {"Asian", "African", "Hispanic", "American"};
+            Map<String, List<String>> countriesByRegion = new HashMap<>();
+            countriesByRegion.put("Asian", Arrays.asList("China", "India", "Japan", "Bangladesh", "Pakistan"));
+            countriesByRegion.put("African", Arrays.asList("Nigeria", "Ghana", "Kenya", "Senegal"));
+            countriesByRegion.put("Hispanic", Arrays.asList("Mexico", "Cuba", "Dominican Republic", "Colombia"));
+            countriesByRegion.put("American", Arrays.asList("USA"));
+    
             while (true) {
-                System.out.print("\nEnter item number to add to cart (0 to finish): ");
-                int itemChoice = getValidChoice(scanner, 0, restaurant.menu.size());
-                if (itemChoice == 0) break;
-                customer.addToCart(restaurant.menu.get(itemChoice - 1));
+                System.out.println("\nSelect a region:");
+                for (int i = 0; i < regions.length; i++) {
+                    System.out.printf("  %d. %s%n", i + 1, regions[i]);
+                }
+                int regionChoice = getValidChoice(scanner, 1, regions.length);
+                String region = regions[regionChoice - 1];
+    
+                List<String> countries = countriesByRegion.get(region);
+                System.out.println("\nSelect a country in " + region + ":");
+                for (int i = 0; i < countries.size(); i++) {
+                    System.out.printf("  %d. %s%n", i + 1, countries.get(i));
+                }
+                int countryChoice = getValidChoice(scanner, 1, countries.size());
+                String country = countries.get(countryChoice - 1);
+    
+                Restaurant restaurant = new Restaurant(region, country);
+                restaurant.showMenu();
+    
+                while (true) {
+                    System.out.print("\nEnter item number to add to cart (0 to finish): ");
+                    int itemChoice = getValidChoice(scanner, 0, restaurant.menu.size());
+                    if (itemChoice == 0) break;
+                    customer.addToCart(restaurant.menu.get(itemChoice - 1));
+                }
+    
+                customer.checkout(new CreditCardPayment());
+    
+                System.out.print("Would you like to leave a review from 1–5? (yes/no): ");
+                String response = scanner.nextLine().trim().toLowerCase();
+                if (response.equals("yes")) {
+                    int rating = getValidChoice(scanner, 1, 5);
+                    System.out.print("Enter your comment: ");
+                    String comment = scanner.nextLine();
+                    restaurant.addReview(new Review(name, rating, comment));
+                    System.out.println("Thank you for your review!");
+                }
+    
+                restaurant.showReviews();
+                customer.showPurchaseHistory();
+    
+                System.out.print("\nWould you like to order from another country? (yes/no): ");
+                String again = scanner.nextLine().trim().toLowerCase();
+                if (!again.equals("yes")) {
+                    System.out.println("Thank you for using the Food Ordering App!");
+                    break;
+                }
             }
-
-            customer.checkout(new CreditCardPayment());
-
-            System.out.print("Would you like to leave a review from 1-5? (yes/no): ");
-            String response = scanner.nextLine().trim().toLowerCase();
-            if (response.equals("yes")) {
-                int rating = getValidChoice(scanner, 1, 5);
-                System.out.print("Enter your comment: ");
-                String comment = scanner.nextLine();
-                restaurant.addReview(new Review(name, rating, comment));
-                System.out.println("Thank you for your review!");
-            }
-
-            restaurant.showReviews();
-
-            System.out.print("\nWould you like to order from another country? (yes/no): ");
-            String again = scanner.nextLine().trim().toLowerCase();
-            if (!again.equals("yes")) {
-                System.out.println("Thank you for using the Food Ordering App!");
-                break;
+    
+            scanner.close();
+        }
+    
+        static String getValidInput(Scanner scanner, String prompt) {
+            while (true) {
+                System.out.print(prompt);
+                String input = scanner.nextLine().trim();
+                if (!input.isEmpty()) return input;
+                System.out.println("Input cannot be empty. Try again.");
             }
         }
-
-        scanner.close();
-    }
-
-    static String getValidInput(Scanner scanner, String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine().trim();
-            if (!input.isEmpty()) return input;
-            System.out.println("Input cannot be empty. Try again.");
-        }
-    }
-
-    static int getValidChoice(Scanner scanner, int min, int max) {
-        while (true) {
-            if (scanner.hasNextInt()) {
-                int val = scanner.nextInt();
-                scanner.nextLine(); // clear newline
-                if (val >= min && val <= max) return val;
-            } else {
-                scanner.nextLine(); // clear bad input
+    
+        static int getValidChoice(Scanner scanner, int min, int max) {
+            while (true) {
+                if (scanner.hasNextInt()) {
+                    int val = scanner.nextInt();
+                    scanner.nextLine(); // clear newline
+                    if (val >= min && val <= max) return val;
+                } else {
+                    scanner.nextLine(); // clear bad input
+                }
+                System.out.print("Invalid. Enter a number between " + min + " and " + max + ": ");
             }
-            System.out.print("Invalid. Enter a number between " + min + " and " + max + ": ");
         }
     }
-}
+    
